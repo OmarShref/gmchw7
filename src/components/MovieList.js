@@ -1,7 +1,7 @@
 import MovieCard from "./MovieCard";
 import "./MovieList.css";
 
-const MovieList = ({ movies, inputSearch }) => {
+const MovieList = ({ movies, inputSearch, getMovie }) => {
   return (
     <div className="movie-list">
       {movies
@@ -11,7 +11,7 @@ const MovieList = ({ movies, inputSearch }) => {
             movie.rating === +inputSearch
         )
         .map((movie) => (
-          <MovieCard movie={movie} />
+          <MovieCard movie={movie} getMovie={getMovie} />
         ))}
     </div>
   );

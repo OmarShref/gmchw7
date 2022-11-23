@@ -4,13 +4,15 @@ import MovieList from "./components/MovieList";
 import Filter from "./components/Filter";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Routes, Route } from "react-router-dom";
+import Movie from "./components/Movie";
 
 function App() {
   const [movies, setMovies] = useState([
     {
       img: "https://i.ytimg.com/vi/Udfq0fiScug/movieposter_en.jpg",
       title: "catch me if you can",
-      discription: "good movie",
+      discription: "bad movie",
       rating: 3,
     },
     {
@@ -35,7 +37,10 @@ function App() {
   const [inputDiscription, setInputDiscription] = useState("");
   const [inputRating, setInputRating] = useState(0);
   const [inputPosterUrl, setInputPosterUrl] = useState("");
-
+  const [clickedMovie, setClickedMovie] = useState({});
+  const getMovie = (movie) => {
+    setClickedMovie(movie);
+  };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleAdd = () => {
@@ -110,7 +115,33 @@ function App() {
       </Modal>
 
       <Filter handleSearch={handleSearch} />
-      <MovieList movies={movies} inputSearch={inputSearch} />
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MovieList
+              movies={movies}
+              inputSearch={inputSearch}
+              getMovie={getMovie}
+            />
+          }
+        />
+        <Route
+          index
+          element={
+            <MovieList
+              movies={movies}
+              inputSearch={inputSearch}
+              getMovie={getMovie}
+            />
+          }
+        />
+        <Route
+          path="/movie"
+          element={<Movie discription={clickedMovie.discription} />}
+        />
+      </Routes>
     </div>
   );
 }
